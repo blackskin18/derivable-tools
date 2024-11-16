@@ -111,6 +111,7 @@ export declare class Resource {
     swapLogs: Array<LogType>;
     transferLogs: Array<LogType>;
     bnaLogs: Array<LogType>;
+    allLogs: Array<LogType>;
     unit: number;
     chainId: number;
     scanApi?: any;

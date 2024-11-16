@@ -79,6 +79,7 @@ class Resource {
         this.swapLogs = [];
         this.transferLogs = [];
         this.bnaLogs = [];
+        this.allLogs = [];
         this.unit = 1000000;
         this.chainId = engineConfigs.chainId;
         this.scanApi = profile.configs.scanApi;
@@ -479,6 +480,7 @@ class Resource {
                 // this.poolGroups = {...this.poolGroups, ...result.poolGroups}
                 // this.pools = {...this.pools, ...result.pools}
                 // this.tokens = [...this.tokens, ...result.tokens]
+                this.allLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.allLogs, result.allLogs);
                 this.swapLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.swapLogs, result.swapLogs);
                 this.transferLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.transferLogs, result.transferLogs);
                 this.bnaLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.bnaLogs, result.bnaLogs);
