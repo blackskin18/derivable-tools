@@ -362,6 +362,7 @@ class Resource {
                 results.pools = pools;
                 results.poolGroups = poolGroups;
             }
+            this.allLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.allLogs, results.allLogs);
             this.swapLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.swapLogs, results.swapLogs);
             this.transferLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.transferLogs, results.transferLogs);
             this.bnaLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.bnaLogs, results.bnaLogs);
