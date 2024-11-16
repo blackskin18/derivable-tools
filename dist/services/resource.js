@@ -363,7 +363,7 @@ class Resource {
                 results.pools = pools;
                 results.poolGroups = poolGroups;
             }
-            this.allLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.allLogs, results.allLogs);
+            this.allLogs = results.allLogs;
             this.swapLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.swapLogs, results.swapLogs);
             this.transferLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.transferLogs, results.transferLogs);
             this.bnaLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.bnaLogs, results.bnaLogs);
@@ -482,7 +482,7 @@ class Resource {
                 // this.poolGroups = {...this.poolGroups, ...result.poolGroups}
                 // this.pools = {...this.pools, ...result.pools}
                 // this.tokens = [...this.tokens, ...result.tokens]
-                this.allLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.allLogs, result.allLogs);
+                this.allLogs = result.allLogs;
                 this.swapLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.swapLogs, result.swapLogs);
                 this.transferLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.transferLogs, result.transferLogs);
                 this.bnaLogs = (0, helper_1.mergeTwoUniqSortedLogs)(this.bnaLogs, result.bnaLogs);
