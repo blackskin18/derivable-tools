@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EventDataAbis = exports.POOL_IDS = exports.PARA_BUILD_TX_BASE_URL = exports.PARA_VERSION = exports.PARA_DATA_BASE_URL = exports.LOCALSTORAGE_KEY = exports.MINI_SECOND_PER_DAY = exports.NATIVE_ADDRESS = exports.ZERO_ADDRESS = exports.LARGE_VALUE = exports.SECONDS_PER_DAY = void 0;
+exports.EventDataAbis = exports.POOL_IDS = exports.FeeAmount = exports.PARA_BUILD_TX_BASE_URL = exports.PARA_VERSION = exports.PARA_DATA_BASE_URL = exports.LOCALSTORAGE_KEY = exports.MINI_SECOND_PER_DAY = exports.NATIVE_ADDRESS = exports.ZERO_ADDRESS = exports.LARGE_VALUE = exports.POOL_INIT_CODE_HASH = exports.SECONDS_PER_DAY = void 0;
 exports.SECONDS_PER_DAY = 86400;
+exports.POOL_INIT_CODE_HASH = '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54';
 exports.LARGE_VALUE = '0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF';
 exports.ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 exports.NATIVE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -19,6 +20,13 @@ exports.LOCALSTORAGE_KEY = {
 exports.PARA_DATA_BASE_URL = 'https://api.paraswap.io/prices';
 exports.PARA_VERSION = "5";
 exports.PARA_BUILD_TX_BASE_URL = 'https://api.paraswap.io/transactions';
+var FeeAmount;
+(function (FeeAmount) {
+    FeeAmount[FeeAmount["LOWEST"] = 100] = "LOWEST";
+    FeeAmount[FeeAmount["LOW"] = 500] = "LOW";
+    FeeAmount[FeeAmount["MEDIUM"] = 3000] = "MEDIUM";
+    FeeAmount[FeeAmount["HIGH"] = 10000] = "HIGH";
+})(FeeAmount = exports.FeeAmount || (exports.FeeAmount = {}));
 exports.POOL_IDS = {
     cToken: 0x20000,
     cp: 0x10000,

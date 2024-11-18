@@ -1,5 +1,6 @@
 import { BigNumber, ethers } from 'ethers';
 import { LogType, PoolType, TokenType } from '../types';
+import { FeeAmount } from './constant';
 export declare const provider: ethers.providers.JsonRpcProvider;
 export declare const bn: typeof BigNumber.from;
 export declare const weiToNumber: (wei: any, decimals?: number, decimalToDisplay?: number) => string;
@@ -44,3 +45,11 @@ export declare const WEI: (num: number | string, decimals?: number) => string;
 export declare const DIV: (a: BigNumber, b: BigNumber, precision?: number) => string;
 export declare function compareLog(a: LogType, b: LogType): number;
 export declare function mergeTwoUniqSortedLogs(a: LogType[], b: LogType[]): LogType[];
+export declare function sortsBefore(tokenA: string, tokenB: string): boolean;
+export declare function computePoolAddress({ factoryAddress, tokenA, tokenB, fee, initCodeHashManualOverride }: {
+    factoryAddress: string;
+    tokenA: TokenType;
+    tokenB: TokenType;
+    fee: FeeAmount;
+    initCodeHashManualOverride?: string;
+}): string;

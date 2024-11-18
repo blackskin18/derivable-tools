@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers';
-import { AllowancesType, BalancesType, MaturitiesType } from '../types';
+import { AllowancesType, BalancesType, LogType, MaturitiesType, TokenType } from '../types';
 import { IEngineConfig } from '../utils/configs';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { Profile } from '../profile';
@@ -23,6 +23,22 @@ export interface IUniPosV3 {
     tokensOwed1: string;
     token0: string;
     token1: string;
+    token0Data: TokenType;
+    token1Data: TokenType;
+    poolAddress: string;
+    poolState?: IUniPoolV3;
+}
+export interface IUniPoolV3 {
+    poolLiquidity?: BigNumber;
+    slot0?: {
+        sqrtPriceX96: BigNumber;
+        tick: number;
+        observationIndex: number;
+        observationCardinality: number;
+        observationCardinalityNext: number;
+        feeProtocol: number;
+        unlocked: boolean;
+    };
 }
 export declare class BnA {
     provider: JsonRpcProvider;
@@ -34,7 +50,12 @@ export declare class BnA {
         RESOURCE: Resource;
     }, profile: Profile);
     getBalanceAndAllowance(account: string, withNative?: boolean): Promise<BnAReturnType>;
-    loadUniswapV3Position(assetsOverride?: Assets): Promise<{
+    loadUniswapV3Position({ assetsOverride, tokensOverride, uniswapV3FactoryOverride, allLogsOverride }: {
+        assetsOverride?: Assets;
+        tokensOverride?: TokenType[];
+        uniswapV3FactoryOverride?: string;
+        allLogsOverride?: LogType[];
+    }): Promise<{
         [posKey: string]: IUniPosV3;
     }>;
 }

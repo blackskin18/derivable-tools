@@ -118,7 +118,7 @@ class Resource {
             const assets = updateAssets || {
                 20: { balance: {}, allowance: {} },
                 721: { balance: {}, allowanceALl: {}, allowance: {} },
-                1155: { balance: {}, allowance: {} }
+                1155: { balance: {}, allowance: {} },
             };
             const eventInterface = new ethers_1.ethers.utils.Interface(this.profile.getAbi('Events'));
             const event721Interface = new ethers_1.ethers.utils.Interface(this.profile.getAbi('Events721'));
@@ -242,6 +242,7 @@ class Resource {
                     }
                 }
             }
+            this.assets = assets;
             return assets;
         }
         catch (error) {

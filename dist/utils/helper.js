@@ -3,10 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mergeTwoUniqSortedLogs = exports.compareLog = exports.DIV = exports.WEI = exports.IEW = exports.round = exports.truncate = exports.BIG = exports.NUM = exports.STR = exports.kx = exports.rateFromHL = exports.rateToHL = exports.getTopics = exports.mergeDeep = exports.parseSqrtX96 = exports.parsePrice = exports.parseUq128x128 = exports.packId = exports.detectDecimalFromPrice = exports.add = exports.max = exports.div = exports.sub = exports.mul = exports.formatPercent = exports.formatFloat = exports.getNormalAddress = exports.isErc1155Address = exports.getErc1155Token = exports.formatMultiCallBignumber = exports.decodePowers = exports.numberToWei = exports.weiToNumber = exports.bn = exports.provider = void 0;
+exports.computePoolAddress = exports.sortsBefore = exports.mergeTwoUniqSortedLogs = exports.compareLog = exports.DIV = exports.WEI = exports.IEW = exports.round = exports.truncate = exports.BIG = exports.NUM = exports.STR = exports.kx = exports.rateFromHL = exports.rateToHL = exports.getTopics = exports.mergeDeep = exports.parseSqrtX96 = exports.parsePrice = exports.parseUq128x128 = exports.packId = exports.detectDecimalFromPrice = exports.add = exports.max = exports.div = exports.sub = exports.mul = exports.formatPercent = exports.formatFloat = exports.getNormalAddress = exports.isErc1155Address = exports.getErc1155Token = exports.formatMultiCallBignumber = exports.decodePowers = exports.numberToWei = exports.weiToNumber = exports.bn = exports.provider = void 0;
 const ethers_1 = require("ethers");
 const Events_json_1 = __importDefault(require("../abi/Events.json"));
 const constant_1 = require("./constant");
+const abi_1 = require("@ethersproject/abi");
+const address_1 = require("@ethersproject/address");
+const solidity_1 = require("@ethersproject/solidity");
 // TODO: Change name a some function
 // TODO: Convert require to import
 const mdp = require('move-decimal-point');
@@ -411,4 +414,16 @@ function mergeTwoUniqSortedLogs(a, b) {
     return r;
 }
 exports.mergeTwoUniqSortedLogs = mergeTwoUniqSortedLogs;
+function sortsBefore(tokenA, tokenB) {
+    if (tokenA === tokenB) {
+        throw new Error("The tokens have the same address.");
+    }
+    return tokenA.toLowerCase() < tokenB.toLowerCase();
+}
+exports.sortsBefore = sortsBefore;
+function computePoolAddress({ factoryAddress, tokenA, tokenB, fee, initCodeHashManualOverride }) {
+    const [token0, token1] = sortsBefore(tokenA.address, tokenB.address) ? [tokenA, tokenB] : [tokenB, tokenA]; // does safety checks
+    return (0, address_1.getCreate2Address)(factoryAddress, (0, solidity_1.keccak256)(['bytes'], [abi_1.defaultAbiCoder.encode(['address', 'address', 'uint24'], [token0.address, token1.address, fee])]), initCodeHashManualOverride ?? constant_1.POOL_INIT_CODE_HASH);
+}
+exports.computePoolAddress = computePoolAddress;
 //# sourceMappingURL=helper.js.map
