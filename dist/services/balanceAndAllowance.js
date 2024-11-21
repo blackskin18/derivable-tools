@@ -174,7 +174,6 @@ class BnA {
                     tokenB = sameReceiveUniPosLogs[0]?.address;
                     poolAddress = sameReceiveUniPosLogs[0].args.to;
                 }
-                console.log(tokenA, tokenB);
                 const [token0, token1] = (0, helper_1.sortsBefore)(tokenA, tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]; // does safety checks
                 return {
                     token0,
@@ -189,7 +188,7 @@ class BnA {
                 return;
             }
         }).filter(l => l?.uni3PosAddress && l?.uni3PosId);
-        console.log(uni3PosFromLogs);
+        // console.log(uni3PosFromLogs, assets)
         await (0, multicall_1.multicall)(this.RESOURCE.provider, [
             ...uni3PosFromLogs.map(({ uni3PosId, uni3PosAddress }) => ({
                 reference: `position-${uni3PosId}`,
@@ -247,7 +246,6 @@ class BnA {
                         // uniPosV3Data[[uni3PosAddress, uni3PosId].join('-')][ret.reference] = ret.returnValues
                         if (ret.reference === 'slot0') {
                             const [sqrtPriceX96, tick, observationIndex, observationCardinality, observationCardinalityNext, feeProtocol, unlocked,] = ret.returnValues;
-                            console.log(sqrtPriceX96);
                             if (!uniPoolV3Data[poolAddress])
                                 uniPoolV3Data[poolAddress] = {};
                             uniPoolV3Data[poolAddress][ret.reference] = {
