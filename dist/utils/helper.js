@@ -433,11 +433,13 @@ function tryParseLog(log, ifaces) {
             return iface.parseLog(log);
         }
         catch (err) {
-            if (i < ifaces.length - 1) {
-                continue;
+            if (i >= ifaces.length - 1) {
+                // console.warn(
+                //   err.message ?? err.code ?? err.reason ?? '!parseLog',
+                //   log.transactionHash,
+                //   log.logIndex)
+                break;
             }
-            console.warn(err.message ?? err.code ?? err.reason ?? '!parseLog', log.transactionHash, log.logIndex);
-            return undefined;
         }
     }
     return undefined;
