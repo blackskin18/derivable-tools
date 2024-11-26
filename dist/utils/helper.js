@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.computePoolAddress = exports.sortsBefore = exports.mergeTwoUniqSortedLogs = exports.compareLog = exports.DIV = exports.WEI = exports.IEW = exports.round = exports.truncate = exports.BIG = exports.NUM = exports.STR = exports.kx = exports.rateFromHL = exports.rateToHL = exports.getTopics = exports.mergeDeep = exports.parseSqrtX96 = exports.parsePrice = exports.parseUq128x128 = exports.packId = exports.detectDecimalFromPrice = exports.add = exports.max = exports.div = exports.sub = exports.mul = exports.formatPercent = exports.formatFloat = exports.getNormalAddress = exports.isErc1155Address = exports.getErc1155Token = exports.formatMultiCallBignumber = exports.decodePowers = exports.numberToWei = exports.weiToNumber = exports.bn = exports.provider = void 0;
+exports.tryParseLog = exports.computePoolAddress = exports.sortsBefore = exports.mergeTwoUniqSortedLogs = exports.compareLog = exports.DIV = exports.WEI = exports.IEW = exports.round = exports.truncate = exports.BIG = exports.NUM = exports.STR = exports.kx = exports.rateFromHL = exports.rateToHL = exports.getTopics = exports.mergeDeep = exports.parseSqrtX96 = exports.parsePrice = exports.parseUq128x128 = exports.packId = exports.detectDecimalFromPrice = exports.add = exports.max = exports.div = exports.sub = exports.mul = exports.formatPercent = exports.formatFloat = exports.getNormalAddress = exports.isErc1155Address = exports.getErc1155Token = exports.formatMultiCallBignumber = exports.decodePowers = exports.numberToWei = exports.weiToNumber = exports.bn = exports.provider = void 0;
 const ethers_1 = require("ethers");
 const Events_json_1 = __importDefault(require("../abi/Events.json"));
 const constant_1 = require("./constant");
@@ -426,4 +426,21 @@ function computePoolAddress({ factoryAddress, tokenA, tokenB, fee, initCodeHashM
     return (0, address_1.getCreate2Address)(factoryAddress, (0, solidity_1.keccak256)(['bytes'], [abi_1.defaultAbiCoder.encode(['address', 'address', 'uint24'], [token0.address, token1.address, fee])]), initCodeHashManualOverride ?? constant_1.POOL_INIT_CODE_HASH);
 }
 exports.computePoolAddress = computePoolAddress;
+function tryParseLog(log, ifaces) {
+    for (let i = 0; i < ifaces.length; ++i) {
+        const iface = ifaces[i];
+        try {
+            return iface.parseLog(log);
+        }
+        catch (err) {
+            if (i < ifaces.length - 1) {
+                continue;
+            }
+            console.warn(err.message ?? err.code ?? err.reason ?? '!parseLog', log.transactionHash, log.logIndex);
+            return undefined;
+        }
+    }
+    return undefined;
+}
+exports.tryParseLog = tryParseLog;
 //# sourceMappingURL=helper.js.map

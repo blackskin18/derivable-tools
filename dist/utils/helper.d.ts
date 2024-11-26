@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from 'ethers';
 import { LogType, PoolType, TokenType } from '../types';
 import { FeeAmount } from './constant';
+import { Interface, LogDescription } from '@ethersproject/abi';
 export declare const provider: ethers.providers.JsonRpcProvider;
 export declare const bn: typeof BigNumber.from;
 export declare const weiToNumber: (wei: any, decimals?: number, decimalToDisplay?: number) => string;
@@ -53,3 +54,4 @@ export declare function computePoolAddress({ factoryAddress, tokenA, tokenB, fee
     fee: FeeAmount;
     initCodeHashManualOverride?: string;
 }): string;
+export declare function tryParseLog(log: LogType, ifaces: Interface[]): LogDescription | undefined;

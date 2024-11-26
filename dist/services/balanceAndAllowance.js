@@ -154,7 +154,7 @@ class BnA {
         const event721Interface = new utils_1.Interface(this.profile.getAbi('Events721'));
         const uni3PosFromLogs = allLogs.map(log => {
             try {
-                const parsedLog = { ...log, ...event721Interface.parseLog(log) };
+                const parsedLog = { ...log, ...(0, helper_1.tryParseLog)(log, [event721Interface]) };
                 if (!parsedLog.args || !parsedLog.args?.tokenId || !log?.address || log?.address?.toLowerCase?.() !== this.profile.configs.uniswap.v3Pos.toLowerCase())
                     return;
                 let tokenA = '';

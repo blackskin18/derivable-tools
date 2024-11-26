@@ -125,22 +125,11 @@ class Resource {
             const parsedLogs = logs.map((log) => {
                 if (log.address.toLowerCase() === '0xc36442b4a4522e871399cd717abdd847ab11fe88')
                     console.log(log.address);
-                try {
-                    const parsedLog = eventInterface.parseLog(log);
-                    return {
-                        ...log,
-                        ...parsedLog,
-                    };
+                const parsedLog = (0, helper_1.tryParseLog)(log, [eventInterface, event721Interface]);
+                if (!parsedLog) {
+                    return null;
                 }
-                catch (err) {
-                    try {
-                        const parsedLog = event721Interface.parseLog(log);
-                        return { ...log, ...parsedLog };
-                    }
-                    catch {
-                        return null;
-                    }
-                }
+                return { ...log, ...parsedLog };
             }).filter((log) => log != null);
             console.log(parsedLogs.length);
             for (const log of parsedLogs) {
@@ -1037,17 +1026,14 @@ class Resource {
     parseDdlLogs(ddlLogs) {
         const eventInterface = new ethers_1.ethers.utils.Interface(this.profile.getAbi('Events'));
         return ddlLogs.map((log) => {
-            try {
-                const parsedLog = eventInterface.parseLog(log);
-                return {
-                    ...log,
-                    ...parsedLog,
-                };
+            const parsedLog = (0, helper_1.tryParseLog)(log, [eventInterface]);
+            if (!parsedLog) {
+                return undefined;
             }
-            catch (err) {
-                console.warn('Failed to parse log', err, log);
-            }
-            return undefined;
+            return {
+                ...log,
+                ...parsedLog,
+            };
         }).filter((log) => log != null);
     }
     _tokenInRoutes() {
